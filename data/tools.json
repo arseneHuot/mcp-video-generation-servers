@@ -390,6 +390,42 @@
         "latestReleaseDate": null,
         "checkedAt": "2026-10-19"
       }
+    },
+    {
+      "n": 11,
+      "name": "pitchboom",
+      "tagline": null,
+      "homepage": "https://pitchboom.io",
+      "docs": "https://pitchboom.io/docs/mcp",
+      "pricing": "https://pitchboom.io/pricing",
+      "claudeConnection": "Streamable HTTP, personal API key in a Bearer header",
+      "restApi": null,
+      "modelSupport": "Its own motion-design engine; MP4 in 1080p, 4K on Pro and Premium",
+      "freeTier": "no",
+      "repo": null,
+      "note": "Entry added by the maker of pitchboom on 2026-10-25, from the official MCP docs.",
+      "quickstart": [
+        {
+          "label": "Claude Code command copied from the official MCP page. Replace pb_live_YOUR_KEY with a personal API key from Settings > API & MCP:",
+          "lang": "bash",
+          "code": "claude mcp add --transport http pitchboom https://pitchboom.io/api/mcp --header \"Authorization: Bearer pb_live_YOUR_KEY\""
+        }
+      ],
+      "capabilities": {
+        "vendorHostedEndpoint": true,
+        "oauthSignIn": false,
+        "readRunWriteScopeSplit": true,
+        "costShownBeforeARun": true,
+        "timelineOrSceneEditing": true,
+        "firstPartyServer": true
+      },
+      "live": {
+        "stars": null,
+        "lastPush": null,
+        "latestRelease": null,
+        "latestReleaseDate": null,
+        "checkedAt": null
+      }
     }
   ]
 }

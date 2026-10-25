@@ -12,6 +12,7 @@ A maintained dataset of **mcp server for ai video generation** options: what eac
 8. **[Replicate](https://mcp.replicate.com)**
 9. **[Runway](https://github.com/runwayml/runway-api-mcp-server)**
 10. **[MiniMax](https://github.com/MiniMax-AI/MiniMax-MCP)**
+11. **[pitchboom](https://pitchboom.io)**
 
 The tables below are generated from [`data/tools.json`](data/tools.json). Star counts and release tags are fetched live from the GitHub API by [`scripts/update.js`](scripts/update.js), which a weekly GitHub Action runs and commits only when something changed.
 
@@ -36,6 +37,7 @@ Maintained by [a1adams](https://github.com/a1adams). Corrections are welcome, se
   - [Replicate](#8-replicate)
   - [Runway](#9-runway)
   - [MiniMax](#10-minimax)
+  - [pitchboom](#11-pitchboom)
 - [Decision this list supports](#decision-this-list-supports)
 - [Scope and evidence](#scope-and-evidence)
 - [What each column means](#what-each-column-means)
@@ -64,6 +66,7 @@ One row per tool, one column per thing people actually check before committing. 
 | **[Replicate](#8-replicate)** | Hosted SSE endpoint or local npm package, API token | [check](https://replicate.com/pricing) | Any Replicate model, including the text-to-video collection | [pricing](https://replicate.com/pricing) | n/a |
 | **[Runway](#9-runway)** | Self-run: stdio or a self-deployed HTTP server, API key | [check](https://docs.dev.runwayml.com/guides/pricing/) | Runway API models; Seedance for video and Aleph for video editing by default | [pricing](https://docs.dev.runwayml.com/guides/pricing/) | [runwayml/runway-api-mcp-server](https://github.com/runwayml/runway-api-mcp-server), 23 ★, pushed 2026-09-30 |
 | **[MiniMax](#10-minimax)** | Self-run: stdio or SSE, API key | n/a | MiniMax-Hailuo-02 video, plus speech and image | n/a | [MiniMax-AI/MiniMax-MCP](https://github.com/MiniMax-AI/MiniMax-MCP), 1,591 ★, pushed 2026-08-20 |
+| **[pitchboom](#11-pitchboom)** | Streamable HTTP, personal API key in a Bearer header | No | Its own motion-design engine; MP4 in 1080p, 4K on Pro and Premium | [pricing](https://pitchboom.io/pricing) | n/a |
 <!-- DATA-TABLE:END -->
 
 ## Capability scores
@@ -75,6 +78,7 @@ The score counts the documented capabilities a tool has, out of the checks liste
 |------|---|---|---|---|---|---|-------|
 | **[Wireflow](#1-wireflow)** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | **6/6** |
 | **[Flora](#2-flora)** | ✅ | ✅ | n/a | ✅ | ✅ | ✅ | **5/6** |
+| **[pitchboom](#11-pitchboom)** | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ | **5/6** |
 | **[fal](#4-fal)** | ✅ | ✅ | n/a | ✅ | n/a | ✅ | **4/6** |
 | **[HeyGen](#6-heygen)** | ✅ | ✅ | n/a | n/a | ✅ | ✅ | **4/6** |
 | **[Krea](#3-krea)** | ✅ | ✅ | n/a | n/a | n/a | ✅ | **3/6** |
@@ -263,6 +267,22 @@ Setup reference: follow the official authentication and request guide. This is a
 https://github.com/MiniMax-AI/MiniMax-MCP
 ```
 
+### 11. pitchboom
+
+- **What it is:** pitchboom's hosted MCP server for its AI motion-design studio for video ads. From a product URL or a short brief it writes the script, builds a storyboard the user edits and approves, adds voice-over in 34 languages and music, and renders an MP4 in 16:9, 9:16, 1:1, 4:5 or 3:4.
+- **Limits:** Motion design only: no AI avatars, no live-action or stock footage and no text-to-video generative footage, and it does not publish ads to ad accounts. MCP access needs the Pro or Premium plan (free signup credits are for the web app only), sign-in is by API key with no OAuth yet, and the server code is closed source.
+- **Note:** Entry added by the maker of pitchboom on 2026-10-25, from the official MCP docs.
+- **Links:**
+  - [Homepage](https://pitchboom.io)
+  - [Docs](https://pitchboom.io/docs/mcp)
+  - [Pricing](https://pitchboom.io/pricing)
+  - [GitHub: client config, plugins and an agent skill](https://github.com/arseneHuot/pitchboom)
+
+Claude Code command copied from the official MCP page. Replace pb_live_YOUR_KEY with a personal API key from Settings > API & MCP:
+```bash
+claude mcp add --transport http pitchboom https://pitchboom.io/api/mcp --header "Authorization: Bearer pb_live_YOUR_KEY"
+```
+
 ## Decision this list supports
 
 You want an agent in Claude, Cursor, Codex or another MCP client to generate or edit video. This list compares the MCP servers that do it on the details that decide setup and risk: where the server runs, how it signs in, whether permissions are split, whether you see a price before you spend, and whether the agent can edit a cut rather than only generate clips.
@@ -396,6 +416,17 @@ The weekly repository job refreshes GitHub metadata. It does not re-check vendor
 - Timeline editing: not published. [README](https://github.com/MiniMax-AI/MiniMax-MCP)
 - Docs: [github.com/MiniMax-AI/MiniMax-MCP](https://github.com/MiniMax-AI/MiniMax-MCP)
 - First-party or community: first-party, described as the official MiniMax MCP server. [README](https://github.com/MiniMax-AI/MiniMax-MCP)
+
+**pitchboom**
+
+- Transport: Streamable HTTP at https://pitchboom.io/api/mcp, stateless; initialize and tools/list answer without a key. [pitchboom MCP server](https://pitchboom.io/docs/mcp)
+- Auth: a personal API key (pb_live_...) in an Authorization: Bearer header, created at Settings > API & MCP; no OAuth sign-in yet. [pitchboom MCP server](https://pitchboom.io/docs/mcp)
+- Scope split: yes. Keys carry Read, Prepare & edit and Spend credits scopes, offered as Full access, No spending and Read only presets. [pitchboom MCP server](https://pitchboom.io/docs/mcp)
+- Video models: no model catalog; pitchboom's own motion-design pipeline writes the script and storyboard, adds voice-over and music, and renders MP4 in 1080p, or 4K on Pro and Premium. [pitchboom MCP server](https://pitchboom.io/docs/mcp)
+- Cost before a run: yes. create_project, get_estimate, request_variant and paid edits only return a quote; nothing is charged until confirm_operation or approve_storyboard after the user approves the exact amount. [pitchboom MCP server](https://pitchboom.io/docs/mcp)
+- Timeline editing: yes, at scene level. get_storyboard reads the scenes, voice-over and on-screen texts, update_storyboard changes texts, order, timing and scenes before approval, and edit_video edits a rendered video. [pitchboom MCP server](https://pitchboom.io/docs/mcp)
+- Docs: [pitchboom.io/docs/mcp](https://pitchboom.io/docs/mcp)
+- First-party or community: first-party, published by pitchboom. [pitchboom MCP server](https://pitchboom.io/docs/mcp)
 
 ## Selection notes
 
